@@ -8,11 +8,9 @@ import {
   Menu,
   MenuItem,
   IconButton,
-  InputBase,
   Box,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { fetchGraphQL } from "../graphql/client";
@@ -54,64 +52,62 @@ const Navbar: React.FC = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography
-          variant="h6"
-          component={Link}
-          to="/"
-          sx={{ flexGrow: 1, textDecoration: "none", color: "inherit" }}
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-          Politechnika Wrocławska
-        </Typography>
-        <Button component={Link} to="/" color="inherit">
-          Products
-        </Button>
-        <Button color="inherit" onClick={handleMenu}>
-          Collections
-        </Button>
-        <Menu
-          id="collections-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {collections.map((collection) => (
-            <MenuItem
-              key={collection.id}
-              component={Link}
-              to={`/collection/${collection.id}`}
-              onClick={handleClose}
-            >
-              {collection.name}
-            </MenuItem>
-          ))}
-        </Menu>
-        <Box sx={{ flexGrow: 1 }} />
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <div style={{ position: "relative", marginRight: "16px" }}>
-            <SearchIcon
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "8px",
-                transform: "translateY(-50%)",
-              }}
-            />
-            <InputBase
-              placeholder="Search…"
-              style={{
-                paddingLeft: "32px",
-                backgroundColor: "rgba(255, 255, 255, 0.15)",
-                borderRadius: "4px",
-              }}
-            />
+          <Typography
+            variant="h6"
+            component={Link}
+            to="/"
+            sx={{ textDecoration: "none", color: "inherit" }}
+          >
+            Politechnika Wrocławska
+          </Typography>
+          <Box
+            sx={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
+          >
+            <Button component={Link} to="/" color="inherit">
+              Products
+            </Button>
+            <Button color="inherit" onClick={handleMenu}>
+              Collections
+            </Button>
+          </Box>
+          <Menu
+            id="collections-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            {collections.map((collection) => (
+              <MenuItem
+                key={collection.id}
+                component={Link}
+                to={`/collection/${collection.id}`}
+                onClick={handleClose}
+              >
+                {collection.name}
+              </MenuItem>
+            ))}
+          </Menu>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <IconButton component={Link} to="/checkout" color="inherit">
+              <ShoppingCartIcon />
+            </IconButton>
+            <IconButton component={Link} to="/user" color="inherit">
+              <AccountCircle />
+            </IconButton>
           </div>
-          <IconButton component={Link} to="/checkout" color="inherit">
-            <ShoppingCartIcon />
-          </IconButton>
-          <IconButton component={Link} to="/user" color="inherit">
-            <AccountCircle />
-          </IconButton>
-        </div>
+        </Box>
       </Toolbar>
     </AppBar>
   );

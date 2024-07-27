@@ -1,7 +1,7 @@
 // src/pages/CollectionPage.tsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Grid, Typography, Box } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import { fetchGraphQL } from "../graphql/client";
 import { GET_PRODUCTS_BY_COLLECTION } from "../graphql/queries";
 import ProductCard from "../components/ProductCard";

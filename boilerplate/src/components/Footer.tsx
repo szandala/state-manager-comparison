@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
               Politechnika Wrocławska
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              Wybrzeże Stanisława Wyspiańskiego 27, 50-370 Wrocław
+              Wybrzeże Stanisława Wyspiańskiego 27 <br /> 50-370 Wrocław
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>

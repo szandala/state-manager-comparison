@@ -55,7 +55,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
             {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {price.start.gross.amount} {price.start.gross.currency} -{" "}
             {price.stop.gross.amount} {price.stop.gross.currency}
           </Typography>
         </Box>

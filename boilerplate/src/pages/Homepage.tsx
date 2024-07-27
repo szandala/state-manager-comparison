@@ -3,6 +3,7 @@ import { Container, Grid, Box } from "@mui/material";
 import { fetchGraphQL } from "../graphql/client";
 import { GET_PRODUCTS } from "../graphql/queries";
 import ProductCard from "../components/ProductCard";
+import { Toolbar } from "../components/Toolbar/Toolbar";
 
 interface Product {
   id: string;
@@ -48,6 +49,7 @@ const Homepage: React.FC = () => {
   return (
     <Box sx={{ paddingTop: 4, paddingBottom: 4 }}>
       <Container>
+        <Toolbar />
         <Grid container spacing={2}>
           {products.map((product) => (
             <Grid item key={product.id} xs={12} sm={6} md={4} lg={2} xl={2}>

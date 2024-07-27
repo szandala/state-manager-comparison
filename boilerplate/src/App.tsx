@@ -7,6 +7,11 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProductPage from "./pages/ProductPage";
 import CollectionPage from "./pages/CollectionPage";
+import { UserPage } from "./pages/UserPage/UserPage";
+import { LoginPage } from "./pages/UserPage/LoginPage";
+import { RegisterPage } from "./pages/UserPage/RegisterPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import PasswordResetPage from "./pages/UserPage/PasswordResetPage";
 
 const App: React.FC = () => {
   return (
@@ -22,8 +27,11 @@ const App: React.FC = () => {
               path="/collection/:collectionId"
               element={<CollectionPage />}
             />
-            <Route path="/checkout" element={<div>Checkout Page</div>} />
-            <Route path="/user" element={<div>User Page</div>} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/user" element={<UserPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/reset-password" element={<PasswordResetPage />} />
           </Routes>
         </Box>
         <Footer />
