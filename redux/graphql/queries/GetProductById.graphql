@@ -1,0 +1,34 @@
+query GetProductById($id: ID!, $channel: String!) {
+  product(id: $id, channel: $channel) {
+    id
+    name
+    description
+    thumbnail(size: 500) {
+      url
+    }
+    media {
+      type
+      url(size: 500)
+    }
+    pricing {
+      priceRange {
+        start {
+          gross {
+            amount
+            currency
+          }
+        }
+        stop {
+          gross {
+            amount
+            currency
+          }
+        }
+      }
+    }
+    variants {
+      id
+      name
+    }
+  }
+}

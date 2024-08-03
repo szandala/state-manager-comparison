@@ -1,0 +1,37 @@
+query GetProductsByCollection($collectionId: ID!, $channel: String!) {
+  products(
+    first: 20
+    channel: $channel
+    where: { collection: { eq: $collectionId } }
+  ) {
+    edges {
+      node {
+        id
+        name
+        thumbnail(size: 100) {
+          url
+        }
+        media {
+          type
+          url(size: 100)
+        }
+        pricing {
+          priceRange {
+            start {
+              gross {
+                amount
+                currency
+              }
+            }
+            stop {
+              gross {
+                amount
+                currency
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
