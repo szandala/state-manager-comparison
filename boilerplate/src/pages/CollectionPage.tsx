@@ -1,55 +1,22 @@
 // src/pages/CollectionPage.tsx
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { Container, Grid } from "@mui/material";
-import { fetchGraphQL } from "../graphql/client";
-import { GET_PRODUCTS_BY_COLLECTION } from "../graphql/queries";
 import ProductCard from "../components/ProductCard";
-
-interface Product {
-  id: string;
-  name: string;
-  thumbnail: {
-    url: string;
-  };
-  pricing: {
-    priceRange: {
-      start: {
-        gross: {
-          amount: number;
-          currency: string;
-        };
-      };
-      stop: {
-        gross: {
-          amount: number;
-          currency: string;
-        };
-      };
-    };
-  };
-}
+import {
+  TaxedMoneyRange,
+  useGetProductsByCollectionQuery,
+} from "../generated/graphql";
 
 const CollectionPage: React.FC = () => {
   const { collectionId } = useParams<{ collectionId: string }>();
-  const [products, setProducts] = useState<Product[]>([]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data: any = await fetchGraphQL(GET_PRODUCTS_BY_COLLECTION, {
-          collectionId,
-          channel: "default-channel",
-        });
-        const products = data.products.edges.map((edge: any) => edge.node);
-        setProducts(products);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
+  const [{ data }] = useGetProductsByCollectionQuery({
+    variables: { collectionId: collectionId!, channel: "default-channel" },
+    pause: !collectionId,
+  });
 
-    fetchProducts();
-  }, [collectionId]);
+  const products = data?.products?.edges.map((edge) => edge.node) ?? [];
 
   return (
     <Container>
@@ -59,8 +26,8 @@ const CollectionPage: React.FC = () => {
             <ProductCard
               id={product.id}
               name={product.name}
-              thumbnailUrl={product.thumbnail.url}
-              price={product.pricing.priceRange}
+              thumbnailUrl={product.thumbnail?.url ?? ""}
+              price={product.pricing?.priceRange as TaxedMoneyRange}
             />
           </Grid>
         ))}

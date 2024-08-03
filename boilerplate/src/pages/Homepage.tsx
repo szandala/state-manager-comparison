@@ -1,50 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container, Grid, Box } from "@mui/material";
-import { fetchGraphQL } from "../graphql/client";
-import { GET_PRODUCTS } from "../graphql/queries";
 import ProductCard from "../components/ProductCard";
 import { Toolbar } from "../components/Toolbar/Toolbar";
-
-interface Product {
-  id: string;
-  name: string;
-  thumbnail: {
-    url: string;
-  };
-  pricing: {
-    priceRange: {
-      start: {
-        gross: {
-          amount: number;
-          currency: string;
-        };
-      };
-      stop: {
-        gross: {
-          amount: number;
-          currency: string;
-        };
-      };
-    };
-  };
-}
+import { TaxedMoneyRange, useGetProductsQuery } from "../generated/graphql";
 
 const Homepage: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [{ data }] = useGetProductsQuery();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data: any = await fetchGraphQL(GET_PRODUCTS);
-        const products = data.products.edges.map((edge: any) => edge.node);
-        setProducts(products);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  const products = data?.products?.edges.map((edge) => edge.node) ?? [];
 
   return (
     <Box sx={{ paddingTop: 4, paddingBottom: 4 }}>
@@ -56,8 +19,8 @@ const Homepage: React.FC = () => {
               <ProductCard
                 id={product.id}
                 name={product.name}
-                thumbnailUrl={product.thumbnail.url}
-                price={product.pricing.priceRange}
+                thumbnailUrl={product.thumbnail?.url ?? ""}
+                price={product.pricing?.priceRange as TaxedMoneyRange}
               />
             </Grid>
           ))}

@@ -1,25 +1,13 @@
 import React from "react";
 import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import { TaxedMoneyRange } from "../generated/graphql";
 
 interface ProductCardProps {
   id: string;
   name: string;
   thumbnailUrl: string;
-  price: {
-    start: {
-      gross: {
-        amount: number;
-        currency: string;
-      };
-    };
-    stop: {
-      gross: {
-        amount: number;
-        currency: string;
-      };
-    };
-  };
+  price?: TaxedMoneyRange | null;
 }
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
@@ -55,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {price.stop.gross.amount} {price.stop.gross.currency}
+            {price?.start?.gross.amount} {price?.start?.gross.currency}
           </Typography>
         </Box>
       </CardContent>

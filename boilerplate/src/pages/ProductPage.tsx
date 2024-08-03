@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Container,
@@ -9,63 +9,17 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { fetchGraphQL } from "../graphql/client";
-import { GET_PRODUCT_BY_ID } from "../graphql/queries";
-
-interface Variant {
-  id: string;
-  name: string;
-}
-
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  thumbnail: {
-    url: string;
-  };
-  pricing: {
-    priceRange: {
-      start: {
-        gross: {
-          amount: number;
-          currency: string;
-        };
-      };
-      stop: {
-        gross: {
-          amount: number;
-          currency: string;
-        };
-      };
-    };
-  };
-  variants: Variant[];
-}
+import { useGetProductByIdQuery } from "../generated/graphql";
 
 const ProductPage: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<string>("");
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const data: any = await fetchGraphQL(GET_PRODUCT_BY_ID, {
-          id: productId,
-          channel: "default-channel",
-        });
-        setProduct(data.product);
-        if (data.product.variants.length > 0) {
-          setSelectedVariant(data.product.variants[0].id);
-        }
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      }
-    };
-
-    fetchProduct();
-  }, [productId]);
+  const [{ data }] = useGetProductByIdQuery({
+    variables: { id: productId!, channel: "default-channel" },
+    pause: !productId,
+  });
+  const product = data?.product;
 
   const renderDescription = (description: string) => {
     try {
@@ -94,7 +48,7 @@ const ProductPage: React.FC = () => {
       <Grid container spacing={4} alignItems="center">
         <Grid item xs={12} md={6}>
           <img
-            src={product.thumbnail.url}
+            src={product.thumbnail?.url ?? ""}
             alt={product.name}
             style={{ width: "100%" }}
           />
@@ -104,20 +58,20 @@ const ProductPage: React.FC = () => {
             {product.name}
           </Typography>
           <Typography variant="h6" component="h2">
-            {product.pricing.priceRange.start.gross.amount}{" "}
-            {product.pricing.priceRange.start.gross.currency} -{" "}
-            {product.pricing.priceRange.stop.gross.amount}{" "}
-            {product.pricing.priceRange.stop.gross.currency}
+            {product.pricing?.priceRange?.start?.gross.amount}{" "}
+            {product.pricing?.priceRange?.start?.gross.currency} -{" "}
+            {product.pricing?.priceRange?.stop?.gross.amount}{" "}
+            {product.pricing?.priceRange?.stop?.gross.currency}
           </Typography>
           <Box sx={{ my: 2 }}>
-            <Typography variant="body1">Select Size:</Typography>
+            <Typography variant="body1">Select Variant:</Typography>
             <Select
               value={selectedVariant}
               onChange={(e) => setSelectedVariant(e.target.value as string)}
               displayEmpty
               fullWidth
             >
-              {product.variants.map((variant) => (
+              {product.variants?.map((variant) => (
                 <MenuItem key={variant.id} value={variant.id}>
                   {variant.name}
                 </MenuItem>

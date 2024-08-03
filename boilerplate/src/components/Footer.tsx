@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>
-              Politechnika Wrocławska
+              Wrocław University of Science and Technology
             </Typography>
             <Typography variant="body2" color="textSecondary">
               Wybrzeże Stanisława Wyspiańskiego 27 <br /> 50-370 Wrocław

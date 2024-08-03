@@ -1,5 +1,5 @@
 // src/components/Navbar.tsx
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -13,33 +13,13 @@ import {
 import { Link } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { fetchGraphQL } from "../graphql/client";
-import { GET_COLLECTIONS } from "../graphql/queries";
-
-interface Collection {
-  id: string;
-  name: string;
-}
+import { useGetCollectionsQuery } from "../generated/graphql";
 
 const Navbar: React.FC = () => {
-  const [collections, setCollections] = useState<Collection[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  useEffect(() => {
-    const fetchCollections = async () => {
-      try {
-        const data: any = await fetchGraphQL(GET_COLLECTIONS);
-        const collections = data.collections.edges.map(
-          (edge: any) => edge.node
-        );
-        setCollections(collections);
-      } catch (error) {
-        console.error("Error fetching collections:", error);
-      }
-    };
-
-    fetchCollections();
-  }, []);
+  const [{ data }] = useGetCollectionsQuery();
+  const collections = data?.collections?.edges.map((edge) => edge.node) ?? [];
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -66,7 +46,7 @@ const Navbar: React.FC = () => {
             to="/"
             sx={{ textDecoration: "none", color: "inherit" }}
           >
-            Politechnika Wrocławska
+            Wrocław University of Science and Technology
           </Typography>
           <Box
             sx={{

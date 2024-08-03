@@ -1,0 +1,33 @@
+query GetProducts {
+  products(first: 20, channel: "default-channel") {
+    edges {
+      node {
+        id
+        name
+        thumbnail(size: 100) {
+          url
+        }
+        media {
+          type
+          url(size: 100)
+        }
+        pricing {
+          priceRange {
+            start {
+              gross {
+                amount
+                currency
+              }
+            }
+            stop {
+              gross {
+                amount
+                currency
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
