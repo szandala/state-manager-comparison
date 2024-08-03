@@ -17,7 +17,6 @@
     "@mui/icons-material": "^5.15.19",
     "@mui/material": "^5.15.19",
     "@urql/exchange-auth": "^1.0.0",
-    "graphql-request": "^7.0.1",
     "graphql": "^16.8.1",
     "urql": "^4.0.2",
     "react": "^18.2.0",
