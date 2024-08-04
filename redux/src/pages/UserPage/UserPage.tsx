@@ -1,7 +1,36 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useMeQuery } from "../../generated/graphql";
+import { useDispatch } from "react-redux";
+import { clearAuthState } from "../../redux/slices/authSlice";
+import { useEffect } from "react";
+import { useAlert } from "../../providers/AlertProvider";
 
 export const UserPage = () => {
+  const [{ data, fetching, error }] = useMeQuery();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const alert = useAlert();
+
+  useEffect(() => {
+    if (!fetching && (!data || !data.me || !data.me.email)) {
+      if (error) {
+        alert(error.message, "error");
+      } else {
+        alert("User not found, please log in again.", "error");
+      }
+      navigate("/login");
+    }
+  }, [fetching, data, error, navigate, alert]);
+
+  const handleLogout = () => {
+    dispatch(clearAuthState());
+    alert("Successfully logged out", "success");
+    navigate("/");
+  };
+
+  if (fetching) return null;
+
   return (
     <Container>
       <Box
@@ -13,7 +42,7 @@ export const UserPage = () => {
         }}
       >
         <Typography variant="h4" sx={{ alignSelf: "center" }}>
-          Hello Joe!
+          Hello {data?.me?.email}!
         </Typography>
         <Box
           sx={{
@@ -27,7 +56,7 @@ export const UserPage = () => {
           <Button variant="contained" component={Link} to="/reset-password">
             Change password
           </Button>
-          <Button variant="contained" color="error">
+          <Button variant="contained" color="error" onClick={handleLogout}>
             Logout
           </Button>
         </Box>

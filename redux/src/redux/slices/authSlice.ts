@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AccountError } from "../../generated/graphql";
 
-interface AuthState {
+export interface AuthState {
   token: string | null | undefined;
   refreshToken: string | null | undefined;
   errors: AccountError[] | null;
 }
 
-const initialState: AuthState = {
+export const initialAuthState: AuthState = {
   token: null,
   refreshToken: null,
   errors: null,
@@ -15,7 +15,7 @@ const initialState: AuthState = {
 
 const authSlice = createSlice({
   name: "auth",
-  initialState,
+  initialState: initialAuthState,
   reducers: {
     setAuthState: (
       state,

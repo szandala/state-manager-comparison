@@ -7,27 +7,47 @@ import {
   Link,
 } from "@mui/material";
 import { useState } from "react";
-import { useTokenCreateMutation } from "../../generated/graphql";
+import { useCreateTokenMutation } from "../../generated/graphql";
 import { useDispatch } from "react-redux";
-import { setAuthErrors, setAuthState } from "../../redux/slices/authSlice";
+import { setAuthState } from "../../redux/slices/authSlice";
+import { useAlert } from "../../providers/AlertProvider";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [result, executeMutation] = useTokenCreateMutation();
+  const [, executeMutation] = useCreateTokenMutation();
   const dispatch = useDispatch();
+  const alert = useAlert();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
-    const { data, error } = await executeMutation({ email, password });
-    if (data?.tokenCreate?.token) {
+    const { data, error: apiError } = await executeMutation({
+      email,
+      password,
+    });
+
+    if (data?.tokenCreate?.token && data?.tokenCreate?.refreshToken) {
       dispatch(
         setAuthState({
           token: data.tokenCreate.token,
           refreshToken: data.tokenCreate.refreshToken,
         })
       );
-    } else if (error) {
-      dispatch(setAuthErrors(data?.tokenCreate?.errors));
+      alert("Login successful! Redirecting...", "success");
+      setTimeout(() => {
+        navigate("/user");
+      }, 2000);
+    }
+
+    const errors = data?.tokenCreate?.errors;
+    if (errors) {
+      errors.forEach((error) =>
+        alert(error.message ?? "Unexpected error", "error")
+      );
+    }
+    if (apiError) {
+      alert(apiError.message, "error");
     }
   };
 
@@ -53,14 +73,22 @@ export const LoginPage = () => {
             gap: 2,
           }}
         >
-          <TextField label="Username" variant="outlined" fullWidth />
+          <TextField
+            label="Email"
+            variant="outlined"
+            fullWidth
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
           <TextField
             label="Password"
             type="password"
             variant="outlined"
             fullWidth
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={handleLogin}>
             Login
           </Button>
         </Box>
