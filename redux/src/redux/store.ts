@@ -1,5 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer, { AuthState, initialAuthState } from "./slices/authSlice";
+import filterReducer from "./slices/filterSlice";
+import searchReducer from "./slices/searchSlice";
+import sortReducer from "./slices/sortSlice";
 
 // Function to load auth state from local storage
 const loadAuthState = (): AuthState => {
@@ -30,6 +33,9 @@ const preloadedAuthState = loadAuthState();
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    filter: filterReducer,
+    search: searchReducer,
+    sort: sortReducer,
   },
   preloadedState: { auth: preloadedAuthState },
 });

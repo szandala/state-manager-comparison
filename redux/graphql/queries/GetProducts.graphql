@@ -1,5 +1,15 @@
-query GetProducts {
-  products(first: 20, channel: "default-channel") {
+query GetProducts(
+  $where: ProductWhereInput
+  $search: String
+  $order: ProductOrder
+) {
+  products(
+    first: 20
+    channel: "default-channel"
+    where: $where
+    search: $search
+    sortBy: $order
+  ) {
     edges {
       node {
         id

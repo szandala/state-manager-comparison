@@ -16,8 +16,6 @@ export const UserPage = () => {
     if (!fetching && (!data || !data.me || !data.me.email)) {
       if (error) {
         alert(error.message, "error");
-      } else {
-        alert("User not found, please log in again.", "error");
       }
       navigate("/login");
     }

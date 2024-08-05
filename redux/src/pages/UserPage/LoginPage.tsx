@@ -34,10 +34,10 @@ export const LoginPage = () => {
           refreshToken: data.tokenCreate.refreshToken,
         })
       );
-      alert("Login successful! Redirecting...", "success");
+      alert("Login successful!", "success");
       setTimeout(() => {
         navigate("/user");
-      }, 2000);
+      }, 100);
     }
 
     const errors = data?.tokenCreate?.errors;

@@ -31,10 +31,10 @@ export const RegisterPage = () => {
     });
 
     if (data?.accountRegister?.user) {
-      alert("Registration successful! Redirecting to login...", "success");
+      alert("Registration successful!", "success");
       setTimeout(() => {
         navigate("/login");
-      }, 2000);
+      }, 100);
     }
 
     const errors = data?.accountRegister?.errors;

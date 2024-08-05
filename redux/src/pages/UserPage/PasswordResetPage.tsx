@@ -7,15 +7,40 @@ import {
   Box,
   TextField,
 } from "@mui/material";
+import { usePasswordResetMutation } from "../../generated/graphql";
+import { useNavigate } from "react-router-dom";
+import { useAlert } from "../../providers/AlertProvider";
 
 const PasswordResetPage: React.FC = () => {
   const [oldPassword, setOldPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const handlePasswordReset = () => {
-    // Add your password reset logic here
-    console.log("Password reset for oldPassword:", oldPassword);
+  const [, executeMutation] = usePasswordResetMutation();
+  const navigate = useNavigate();
+  const alert = useAlert();
+
+  const handlePasswordReset = async () => {
+    if (newPassword !== confirmPassword) {
+      alert("New passwords do not match", "error");
+      return;
+    }
+
+    const { data, error } = await executeMutation({
+      oldPassword,
+      newPassword,
+    });
+
+    if ((data?.passwordChange?.errors ?? []).length > 0) {
+      data?.passwordChange?.errors.forEach((err) =>
+        alert(err.message ?? "Unexpected error", "error")
+      );
+    } else if ((data?.passwordChange?.errors ?? []).length === 0) {
+      alert("Password reset successful!", "success");
+      navigate("/user");
+    } else if (error) {
+      alert(error.message, "error");
+    }
   };
 
   return (
