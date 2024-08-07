@@ -16,8 +16,8 @@ import {
 } from "../generated/graphql";
 import { useAlert } from "../providers/AlertProvider";
 import {
-  getCheckoutFromLocalStorage,
-  saveCheckoutToLocalStorage,
+  getCheckoutIdFromLocalStorage,
+  saveCheckoutIdToLocalStorage,
 } from "../lib/checkout";
 
 const ProductPage: React.FC = () => {
@@ -61,9 +61,9 @@ const ProductPage: React.FC = () => {
     setLoading(true);
 
     try {
-      const checkout = getCheckoutFromLocalStorage();
+      const checkout = getCheckoutIdFromLocalStorage();
       if (checkout) {
-        await addLineToCheckout(checkout.id);
+        await addLineToCheckout(checkout);
       } else {
         await createNewCheckout();
       }
@@ -94,7 +94,7 @@ const ProductPage: React.FC = () => {
       await createNewCheckout();
     } else if (linesAddData?.checkoutLinesAdd?.checkout) {
       alert("Successfully added to cart", "success");
-      saveCheckoutToLocalStorage(linesAddData.checkoutLinesAdd.checkout);
+      saveCheckoutIdToLocalStorage(linesAddData.checkoutLinesAdd.checkout.id);
     }
   };
 
@@ -121,7 +121,7 @@ const ProductPage: React.FC = () => {
       );
     } else if (newCheckoutData?.checkoutCreate?.checkout) {
       alert("Successfully added to cart", "success");
-      saveCheckoutToLocalStorage(newCheckoutData.checkoutCreate.checkout);
+      saveCheckoutIdToLocalStorage(newCheckoutData.checkoutCreate.checkout.id);
     }
   };
 

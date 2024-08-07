@@ -1,0 +1,23 @@
+mutation CheckoutUpdateShipping($checkoutId: ID!, $shippingMethodId: ID!) {
+  checkoutDeliveryMethodUpdate(
+    id: $checkoutId
+    deliveryMethodId: $shippingMethodId
+  ) {
+    checkout {
+      id
+      deliveryMethod {
+        ... on Warehouse {
+          id
+        }
+        ... on ShippingMethod {
+          id
+        }
+      }
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}

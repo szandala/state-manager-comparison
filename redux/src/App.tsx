@@ -10,7 +10,7 @@ import CollectionPage from "./pages/CollectionPage";
 import { UserPage } from "./pages/UserPage/UserPage";
 import { LoginPage } from "./pages/UserPage/LoginPage";
 import { RegisterPage } from "./pages/UserPage/RegisterPage";
-import CheckoutPage from "./pages/CheckoutPage";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import PasswordResetPage from "./pages/UserPage/PasswordResetPage";
 
 const App: React.FC = () => {

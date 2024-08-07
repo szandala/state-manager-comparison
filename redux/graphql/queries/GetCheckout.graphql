@@ -1,6 +1,8 @@
 query GetCheckout($id: ID!) {
   checkout(id: $id) {
     id
+    email
+    authorizeStatus
     shippingMethods {
       id
       name
@@ -40,6 +42,30 @@ query GetCheckout($id: ID!) {
       gross {
         amount
         currency
+      }
+    }
+    shippingAddress {
+      id
+      firstName
+      lastName
+      companyName
+      streetAddress1
+      streetAddress2
+      city
+      postalCode
+      country {
+        code
+        country
+      }
+      countryArea
+      phone
+    }
+    deliveryMethod {
+      ... on Warehouse {
+        id
+      }
+      ... on ShippingMethod {
+        id
       }
     }
   }
