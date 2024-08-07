@@ -1,0 +1,72 @@
+query GetCheckout($id: ID!) {
+  checkout(id: $id) {
+    id
+    email
+    authorizeStatus
+    shippingMethods {
+      id
+      name
+    }
+    availablePaymentGateways {
+      name
+      id
+    }
+    lines {
+      id
+      quantity
+      unitPrice {
+        gross {
+          amount
+          currency
+        }
+      }
+      totalPrice {
+        gross {
+          amount
+          currency
+        }
+      }
+      variant {
+        id
+        name
+        product {
+          id
+          name
+          thumbnail(size: 100) {
+            url
+          }
+        }
+      }
+    }
+    totalPrice {
+      gross {
+        amount
+        currency
+      }
+    }
+    shippingAddress {
+      id
+      firstName
+      lastName
+      companyName
+      streetAddress1
+      streetAddress2
+      city
+      postalCode
+      country {
+        code
+        country
+      }
+      countryArea
+      phone
+    }
+    deliveryMethod {
+      ... on Warehouse {
+        id
+      }
+      ... on ShippingMethod {
+        id
+      }
+    }
+  }
+}

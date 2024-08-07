@@ -1,0 +1,20 @@
+mutation CheckoutTransactionInitialize(
+  $checkoutId: ID!
+  $paymentGateway: PaymentGatewayToInitialize!
+) {
+  transactionInitialize(id: $checkoutId, paymentGateway: $paymentGateway) {
+    transaction {
+      id
+    }
+    transactionEvent {
+      id
+      pspReference
+      type
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}
