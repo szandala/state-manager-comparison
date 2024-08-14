@@ -66,7 +66,10 @@ const useCheckoutStore = create<CheckoutState>()(
           },
         }),
     }),
-    { name: "checkout" }
+    {
+      name: "checkout",
+      partialize: (state) => ({ checkoutId: state.checkoutId }),
+    }
   )
 );
 
