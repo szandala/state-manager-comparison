@@ -15,16 +15,16 @@ import {
   useCheckoutLinesAddMutation,
 } from "../generated/graphql";
 import { useAlert } from "../providers/AlertProvider";
-import {
-  getCheckoutIdFromLocalStorage,
-  saveCheckoutIdToLocalStorage,
-} from "../lib/checkout";
+import useCheckoutStore from "../zustand/checkoutStore";
 
 const ProductPage: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
   const [selectedVariant, setSelectedVariant] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const alert = useAlert();
+
+  const checkoutId = useCheckoutStore((state) => state.checkoutId);
+  const setCheckoutId = useCheckoutStore((state) => state.setCheckoutId);
 
   const [{ data }] = useGetProductByIdQuery({
     variables: { id: productId!, channel: "default-channel" },
@@ -61,9 +61,8 @@ const ProductPage: React.FC = () => {
     setLoading(true);
 
     try {
-      const checkout = getCheckoutIdFromLocalStorage();
-      if (checkout) {
-        await addLineToCheckout(checkout);
+      if (checkoutId) {
+        await addLineToCheckout(checkoutId);
       } else {
         await createNewCheckout();
       }
@@ -94,7 +93,6 @@ const ProductPage: React.FC = () => {
       await createNewCheckout();
     } else if (linesAddData?.checkoutLinesAdd?.checkout) {
       alert("Successfully added to cart", "success");
-      saveCheckoutIdToLocalStorage(linesAddData.checkoutLinesAdd.checkout.id);
     }
   };
 
@@ -121,7 +119,7 @@ const ProductPage: React.FC = () => {
       );
     } else if (newCheckoutData?.checkoutCreate?.checkout) {
       alert("Successfully added to cart", "success");
-      saveCheckoutIdToLocalStorage(newCheckoutData.checkoutCreate.checkout.id);
+      setCheckoutId(newCheckoutData.checkoutCreate.checkout.id);
     }
   };
 
