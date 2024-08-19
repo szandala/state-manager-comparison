@@ -1,0 +1,43 @@
+query GetProducts(
+  $where: ProductWhereInput
+  $search: String
+  $order: ProductOrder
+) {
+  products(
+    first: 20
+    channel: "default-channel"
+    where: $where
+    search: $search
+    sortBy: $order
+  ) {
+    edges {
+      node {
+        id
+        name
+        thumbnail(size: 100) {
+          url
+        }
+        media {
+          type
+          url(size: 100)
+        }
+        pricing {
+          priceRange {
+            start {
+              gross {
+                amount
+                currency
+              }
+            }
+            stop {
+              gross {
+                amount
+                currency
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+query GetAttributes {
+  attributes(first: 5) {
+    edges {
+      node {
+        id
+        name
+        slug
+        choices(first: 30) {
+          edges {
+            node {
+              id
+              name
+              slug
+            }
+          }
+        }
+      }
+    }
+  }
+}
