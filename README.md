@@ -77,7 +77,7 @@ Once the Saleor API is running, follow these steps to set up and run the React a
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/yourusername/thesis-state-management-comparison.git
+   git clone https://github.com/Droniu/state-manager-comparison.git
    cd thesis-state-management-comparison
    ```
 
