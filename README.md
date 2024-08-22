@@ -66,7 +66,7 @@ To configure the store for the experiments:
    - Uncheck the "Require email confirmation" box.
 
 2. **Payment Configuration** (Optional):
-   To enable fully functional checkouts, configure a payment application. You can use the `saleor/dummy-payment-app` for this purpose ([Dummy Payment App](https://github.com/saleor/saleor-platform)):
+   To enable fully functional checkouts, configure a payment application. You can use the `saleor/dummy-payment-app` for this purpose ([Dummy Payment App](https://github.com/saleor/dummy-payment-app/)):
    - Run the app locally and expose it via a tunneling service like `ngrok`.
    - Install the app in the Saleor Dashboard by providing the manifest URL in the format `{tunnel_url}/api/manifest`.
 
