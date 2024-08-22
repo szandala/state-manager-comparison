@@ -110,7 +110,7 @@ The size of each state management library significantly impacts the overall bund
 
 ### Performance Comparison
 
-In terms of performance, measured by Lighthouse scores, all libraries performed similarly with minimal differences in TBT (Total Blocking Time) and LCP (Largest Contentful Paint):
+In terms of performance, measured by Lighthouse scores, there we no differences in TBT (Total Blocking Time) and LCP (Largest Contentful Paint):
 
 | Library     | TBT (ms) | LCP (s) |
 | ----------- | -------- | ------- |
@@ -157,7 +157,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Special thanks to my thesis advisor [szandala](https://github.com/szandala) thanks to whom this project went seamlessly.
+- Special thanks to my thesis advisor [dr inż. Tomasz Szandała](https://github.com/szandala) thanks to whom this project went seamlessly.
 - Thanks to [WUST](https://pwr.edu.pl/en/) for providing the opportunity to conduct this research.
 - Thanks to the [Saleor team](https://github.com/saleor) for developing the amazing API used in this project.
 - Thanks to all the contributors of the state management libraries evaluated in this study.
