@@ -21,7 +21,8 @@ The repository is organized as follows:
 - **/zustand**: The version of the app using Zustand for state management.
 - **/jotai**: The version of the app using Jotai for state management.
 - **/recoil**: The version of the app using Recoil for state management.
-- **/**results****: Contains thesis file and screenshots of the results.
+- **/\_\_results\_\_**: Contains screenshots from the experiments.
+- **/thesis.pdf**: The full thesis document.
 
 ## ⚙️ Setup and Installation
 
@@ -132,6 +133,8 @@ Memory consumption was evaluated on both Safari and Chrome:
 | Zustand     | 20.18                    | 7.71                     |
 | Jotai       | 22.32                    | 8.21                     |
 | Recoil      | 22.73                    | 7.43                     |
+
+Other results, such as state update time, re-renders and library popularity, are detailed in the full thesis document.
 
 ## 🌟 Recommendations
 
