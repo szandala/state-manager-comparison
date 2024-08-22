@@ -81,7 +81,7 @@ Once the Saleor API is running, follow these steps to set up and run the React a
    cd thesis-state-management-comparison
    ```
 
-2. Install dependencies for each version:
+2. Install dependencies for each version (make sure you use Node 20):
    ```bash
    cd redux
    npm install
@@ -92,6 +92,11 @@ Once the Saleor API is running, follow these steps to set up and run the React a
    npm run dev
    ```
    Access the app at `http://localhost:3000`.
+4. If you want to run the application in production mode, or check bundle size:
+   ```bash
+   npm run build
+   npm run preview
+   ```
 
 ## 📊 Results Overview
 
