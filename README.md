@@ -35,22 +35,18 @@ To run the application, you need a running Saleor API. The easiest way to set it
    git clone https://github.com/saleor/saleor-platform
    cd saleor-platform
    ```
-2. Build the Docker image:
-   ```bash
-   docker-compose build
-   ```
-3. Apply Django migrations:
+2. Apply Django migrations:
    ```bash
    docker compose run --rm api python3 manage.py migrate
    ```
-4. Populate the database and create an admin user:
+3. Populate the database and create an admin user:
    ```bash
    docker compose run --rm api python3 manage.py populatedb --createsuperuser
    ```
-5. Start the Saleor API:
+4. Start the Saleor API:
 
    ```bash
-    docker compose up
+    docker compose up -d
    ```
 
    By default, the GraphQL API will be available at http://localhost:8000/graphql/, and the Saleor Dashboard will be accessible at http://localhost:9000/.
@@ -65,7 +61,7 @@ To configure the store for the experiments:
    - Navigate to **Configuration** → **Site settings**.
    - Uncheck the "Require email confirmation" box.
 
-2. **Payment Configuration** (Optional):
+2. **Payment Configuration** (Optional, not needed):
    To enable fully functional checkouts, configure a payment application. You can use the `saleor/dummy-payment-app` for this purpose ([Dummy Payment App](https://github.com/saleor/dummy-payment-app/)):
    - Run the app locally and expose it via a tunneling service like `ngrok`.
    - Install the app in the Saleor Dashboard by providing the manifest URL in the format `{tunnel_url}/api/manifest`.
@@ -91,14 +87,43 @@ Once the Saleor API is running, follow these steps to set up and run the React a
    ```bash
    npm run dev
    ```
-   Access the app at `http://localhost:3000`.
-4. If you want to run the application in production mode, or check bundle size:
+   Access the app at `http://localhost:5173`.
+4. We advice to run the application in **production** mode, or check bundle size:
    ```bash
    npm run build
    npm run preview
    ```
 
+### Run Cypress tests
+
+1. Go to `cypress` directory
+2. Install Cypress
+   ```bash
+   cd cypress
+   npm ci
+   ```
+3. Open Cypress GUI (you may run from CLI if you prefer to)
+   ```bash
+   npx cypress open
+   ```
+4. Choose preferred browser
+5. Go to `specs` and run `test_N.cy.js`
+6. Run tests as many times as you needed. They are idempotent.
+7. Manually measure desired metrics per need, for each app separately.
+
 ## 📊 Results Overview
+
+### Hardware and setup
+
+Some of the metrics (e.g. performance, memory consumption) might be hardware
+dependent.
+Experiments were conducted on:
+
+- Macbook M3 Pro with 18 GB Memory
+- MacOS Sonoma 14.5.
+- Google Chrome 126
+- Safari 17.5
+- Firefox 126.0.1
 
 ### Bundle Size Comparison
 

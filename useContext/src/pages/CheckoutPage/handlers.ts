@@ -80,6 +80,7 @@ export const useHandlers = () => {
         ...(shippingData?.checkoutShippingAddressUpdate?.errors ?? []),
         ...(billingData?.checkoutBillingAddressUpdate?.errors ?? []),
       ].forEach((error) => {
+        console.log({error})
         alert(error?.message ?? "", "error");
       });
     } else {
